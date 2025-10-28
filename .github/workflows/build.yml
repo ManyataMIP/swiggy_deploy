@@ -20,7 +20,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       - name: NPM Install
         run: npm install
-        working-directory: swiggy_deploy/deployment-using-github-actions
+        working-directory: deployment-using-github-actions
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -40,7 +40,7 @@ jobs:
           docker build -t $IMAGE_NAME .
           docker tag $IMAGE_NAME:latest $ECR_REGISTRY/$IMAGE_NAME:latest
           docker push $ECR_REGISTRY/$IMAGE_NAME:latest
-        working-directory: swiggy_deploy/deployment-using-github-actions
+        working-directory: deployment-using-github-actions
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
       # - uses: sonarsource/sonarqube-quality-gate-action@master
