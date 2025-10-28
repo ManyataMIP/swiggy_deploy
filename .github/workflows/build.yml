@@ -60,10 +60,3 @@ jobs:
 
            IMAGE_NAME=swiggy-clone
           docker run -d --name swiggy-clone -p 3000:3000 $ECR_REGISTRY/$IMAGE_NAME:latest
-
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
-      # - uses: sonarsource/sonarqube-quality-gate-action@master
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
