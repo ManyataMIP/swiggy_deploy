@@ -41,6 +41,22 @@ jobs:
           docker tag $IMAGE_NAME:latest $ECR_REGISTRY/$IMAGE_NAME:latest
           docker push $ECR_REGISTRY/$IMAGE_NAME:latest
         working-directory: deployment-using-github-actions
+        
+      - name: Docker pull image from ECR
+        run: |
+          ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          IMAGE_NAME=swiggy-clone
+          docker pull $ECR_REGISTRY/$IMAGE_NAME:latest
+
+      - name: Image scan
+        run: |
+          ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          IMAGE_NAME=swiggy-clone
+          trivy image $ECR_REGISTRY/$IMAGE_NAME:latest > trivyimagedeploy.txt
+
+           IMAGE_NAME=swiggy-clone
+          docker run -d --name swiggy-clone -p 3000:3000 $ECR_REGISTRY/$IMAGE_NAME:latest
+
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
       # - uses: sonarsource/sonarqube-quality-gate-action@master
